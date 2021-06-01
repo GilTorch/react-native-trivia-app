@@ -1,12 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 
-const HomeScreen = () => (
+const HomeScreen = ({ navigation: { navigate }}) => (
   <Container>
     <Title>Welcome to the Trivia Challenge!</Title>
     <Text>You will be presented with 10 True or False questions.</Text>
     <Text>Can you score 100%?</Text>
-    <StartButton>
+    <StartButton onPress={() => navigate("Quizz")}>
       <Text>
         BEGIN
       </Text>
