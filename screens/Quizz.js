@@ -11,6 +11,14 @@ const QuizzScreen = ({ navigation: { navigate } }) => (
           Unturned originally startesd as a Roblox game.
         </Text>
       </QuizzBox>
+      <Answers>
+        <AnswerButton isTrue>
+          <Answer>True</Answer>
+        </AnswerButton>
+        <AnswerButton>
+          <Answer>False</Answer>
+        </AnswerButton>
+      </Answers>
       <QuizzBoxText>
         1 of 10
       </QuizzBoxText>
@@ -58,6 +66,27 @@ const QuizzBox = styled.View`
 
 const QuizzBoxText = styled.Text`
   font-size: 18px;
+`;
+
+const Answers = styled.View`
+  flex-direction: row;
+  align-items:center;
+`;
+
+const AnswerButton = styled.TouchableOpacity`
+  background-color: ${props => props.isTrue ? 'green' : 'rgb(205,0,0)'};
+  width:100px;
+  height:50px;
+  flex-direction:row;
+  justify-content: center;
+  align-items: center;
+  margin-left: 10px;
+  margin-bottom:40px;
+`;
+
+const Answer = styled.Text`
+  color: white;
+  font-size: 16px;
 `;
 
 const Text = styled.Text`
