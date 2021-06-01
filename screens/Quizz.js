@@ -13,10 +13,10 @@ const QuizzScreen = ({ navigation: { navigate } }) => (
       </QuizzBox>
       <Answers>
         <AnswerButton isTrue>
-          <Answer>True</Answer>
+          <Answer>✅</Answer>
         </AnswerButton>
         <AnswerButton>
-          <Answer>False</Answer>
+          <Answer>❌</Answer>
         </AnswerButton>
       </Answers>
       <QuizzBoxText>
@@ -74,7 +74,6 @@ const Answers = styled.View`
 `;
 
 const AnswerButton = styled.TouchableOpacity`
-  background-color: ${props => props.isTrue ? 'green' : 'rgb(205,0,0)'};
   width:100px;
   height:50px;
   flex-direction:row;
@@ -86,7 +85,7 @@ const AnswerButton = styled.TouchableOpacity`
 
 const Answer = styled.Text`
   color: white;
-  font-size: 16px;
+  font-size: 30px;
 `;
 
 const Text = styled.Text`
