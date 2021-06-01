@@ -1,20 +1,35 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-import { SCREEN_WIDTH } from "../utils/dimensions";
-import data from "../utils/data.json";
+import React, { useState, useEffect } from "react";
 import { decode } from "html-entities";
 import { useFocusEffect } from "@react-navigation/native";
+import styled from "styled-components";
+import { SCREEN_WIDTH } from "../utils/dimensions";
+import API from "../services/API";
 
 const QuizzScreen = ({ navigation, route }) => {
 
   let isReset = route.params?.isReset;
-
-  const questions = data.results;
+  const [questions, setQuestions] = useState([]);
   const totalQuestions = questions.length;
   const [currentIndex, setCurrentIndex] = useState(0);
   const [score, setScore] = useState(0);
   const [correctAnswers, setCorrectAnswers] = useState([]);
-  const currentQuestion = questions[currentIndex];
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    fetchQuestions();
+  }, [])
+
+  const fetchQuestions = async () => {
+    try {
+      setLoading(true);
+      const response = await API.getQuestions();
+      setQuestions(response.data.results);
+      setLoading(false);
+    } catch (e) {
+      setLoading(false);
+      throw new Error(`Error: ${e}`)
+    }
+  }
 
   useFocusEffect(
     React.useCallback(() => {
@@ -38,7 +53,7 @@ const QuizzScreen = ({ navigation, route }) => {
       setCurrentIndex(currentIndexCopy);
     }
 
-    if (answer === currentQuestion.correct_answer) {
+    if (answer === questions[currentIndex].correct_answer) {
       const newScore = score + 1;
       setScore(newScore);
       setCorrectAnswers([...correctAnswers, currentIndex]);
@@ -51,27 +66,32 @@ const QuizzScreen = ({ navigation, route }) => {
 
   return (
     <Container>
-      <Wrapper>
-        <Title>{currentQuestion.category}</Title>
-        <QuizzBoxContainer>
-          <QuizzBox>
-            <Text>
-              {decode(currentQuestion.question)}.
-          </Text>
-          </QuizzBox>
-          <Answers>
-            <AnswerButton onPress={() => handleNextQuestion("True")} isTrue>
-              <Answer>✅</Answer>
-            </AnswerButton>
-            <AnswerButton onPress={() => handleNextQuestion("False")}>
-              <Answer>❌</Answer>
-            </AnswerButton>
-          </Answers>
-          <QuizzBoxText>
-            {currentIndex + 1} of {totalQuestions}
-          </QuizzBoxText>
-        </QuizzBoxContainer>
-      </Wrapper>
+      {loading && <LoadingContainer>
+        <Loading />
+      </LoadingContainer>}
+      {!loading && questions && questions.length > 0 && (
+        <Wrapper>
+          <Title>{questions[currentIndex].category}</Title>
+          <QuizzBoxContainer>
+            <QuizzBox>
+              <Text>
+                {decode(questions[currentIndex].question)}
+              </Text>
+            </QuizzBox>
+            <Answers>
+              <AnswerButton onPress={() => handleNextQuestion("True")} isTrue>
+                <Answer>✅</Answer>
+              </AnswerButton>
+              <AnswerButton onPress={() => handleNextQuestion("False")}>
+                <Answer>❌</Answer>
+              </AnswerButton>
+            </Answers>
+            <QuizzBoxText>
+              {currentIndex + 1} of {totalQuestions}
+            </QuizzBoxText>
+          </QuizzBoxContainer>
+        </Wrapper>
+      )}
     </Container>
   )
 }
@@ -86,6 +106,19 @@ const Container = styled.View`
   flex-direction: column;
   align-items: center;
   padding-top: 20px;
+`;
+
+const LoadingContainer = styled.View`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Loading = styled.ActivityIndicator.attrs(
+  {
+    size: "large"
+  }
+)`
 `;
 
 const Wrapper = styled.View`

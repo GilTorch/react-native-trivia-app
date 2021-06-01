@@ -7,8 +7,8 @@ import { decode } from "html-entities";
 const ResultsScreen = ({ navigation: { navigate }, route }) => {
 
   const score = route.params?.score || 0;
+  const questions = route.params?.questions || [];
   const correctAnswers = route.params?.correctAnswers;
-  const questions = data.results;
 
   const isCorrect = index => correctAnswers.includes(index);
 
