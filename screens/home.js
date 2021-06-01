@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-const HomeScreen = ({ navigation: { navigate }}) => (
+const HomeScreen = ({ navigation: { navigate } }) => (
   <Container>
     <Title>Welcome to the Trivia Challenge!</Title>
     <Text>You will be presented with 10 True or False questions.</Text>
@@ -20,7 +20,7 @@ export default HomeScreen;
 const Container = styled.View`
   width:100%;
   height:100%;
-  background-color: #E0E0E0;
+  background-color: ${props => props.theme.container.backgroundColor};
   flex-direction: column;
   justify-content:space-around;
   align-items:center;

@@ -2,10 +2,100 @@
   "response_code": 0,
     "results": [
       {
+        "category": "History",
+        "type": "boolean",
+        "difficulty": "hard",
+        "question": "Japan was part of the Allied Powers during World War I.",
+        "correct_answer": "True",
+        "incorrect_answers": [
+          "False"
+        ]
+      },
+      {
+        "category": "General Knowledge",
+        "type": "boolean",
+        "difficulty": "hard",
+        "question": "&quot;Number 16 Bus Shelter&quot; was a child&#039;s name that was approved by the New Zealand government.",
+        "correct_answer": "True",
+        "incorrect_answers": [
+          "False"
+        ]
+      },
+      {
+        "category": "History",
+        "type": "boolean",
+        "difficulty": "hard",
+        "question": "The USS Missouri (BB-63) last served in the Korean War.",
+        "correct_answer": "False",
+        "incorrect_answers": [
+          "True"
+        ]
+      },
+      {
+        "category": "Entertainment: Japanese Anime & Manga",
+        "type": "boolean",
+        "difficulty": "hard",
+        "question": "Druid is a mage class in &quot;Log Horizon&quot;.",
+        "correct_answer": "False",
+        "incorrect_answers": [
+          "True"
+        ]
+      },
+      {
+        "category": "Science & Nature",
+        "type": "boolean",
+        "difficulty": "hard",
+        "question": "The value of one Calorie is different than the value of one calorie.",
+        "correct_answer": "True",
+        "incorrect_answers": [
+          "False"
+        ]
+      },
+      {
+        "category": "Politics",
+        "type": "boolean",
+        "difficulty": "hard",
+        "question": "George Clinton, Vice President of the United States (1805-1812), is an ancestor of President Bill Clinton.",
+        "correct_answer": "False",
+        "incorrect_answers": [
+          "True"
+        ]
+      },
+      {
+        "category": "Entertainment: Music",
+        "type": "boolean",
+        "difficulty": "hard",
+        "question": "Pete Townshend&#039;s solo album, &quot;White City: A Novel&quot;, is set in the metropolitan area of Chicago.",
+        "correct_answer": "False",
+        "incorrect_answers": [
+          "True"
+        ]
+      },
+      {
+        "category": "General Knowledge",
+        "type": "boolean",
+        "difficulty": "hard",
+        "question": "Spoon theory is a theory, utilizing &quot;Spoons&quot; as a metaphor for energy they can use in a day.",
+        "correct_answer": "True",
+        "incorrect_answers": [
+          "False"
+        ]
+      },
+      {
+        "category": "Mythology",
+        "type": "boolean",
+        "difficulty": "hard",
+        "question": "Janus was the Roman god of doorways and passageways.",
+        "correct_answer": "True",
+        "incorrect_answers": [
+          "False"
+        ]
+      },
+      {
         "category": "Entertainment: Video Games",
         "type": "boolean",
         "difficulty": "hard",
-        "question": "Unturned originally started as a Roblox game.",
+        "question": "In &quot;Minecraft&quot;, gold tools are faster than diamond tools.",
         "correct_answer": "True",
         "incorrect_answers": [
           "False"

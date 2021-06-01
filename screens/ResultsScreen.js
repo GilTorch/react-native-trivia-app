@@ -1,23 +1,30 @@
 import React from "react";
 import styled from "styled-components";
 import { Entypo } from "@expo/vector-icons"
+import data from "../utils/data.json";
+import { decode } from "html-entities";
 
 const ResultsScreen = ({ navigation: { navigate } }) => {
+
+  const questions = data.results;
 
   return (
     <Container>
       <Title>You scored 3/10</Title>
       <Questions>
-        <QuestionContainer>
-          <IconWrapper>
-            <Entypo name="plus" size={34} color="#555" />
-          </IconWrapper>
-          <QuestionWrapper>
-            <Question>Unturned originally started as a Roblox game</Question>
-          </QuestionWrapper>
-        </QuestionContainer>
+        {questions.map((question, idx) => (
+          <QuestionContainer key={idx}>
+            <IconWrapper>
+              {/* <Entypo name="plus" size={34} color="#555" /> */}
+              <Entypo name="minus" size={34} color="#555" />
+            </IconWrapper>
+            <QuestionWrapper>
+              <Question>{decode(question.question)}</Question>
+            </QuestionWrapper>
+          </QuestionContainer>
+        ))}
       </Questions>
-      <StartButton onPress={() => navigate("Quizz")}>
+      <StartButton onPress={() => navigate({ name: "Quizz", params: { isReset: true } })}>
         <Text>
           PLAY AGAIN?
       </Text>
@@ -32,13 +39,12 @@ export default ResultsScreen;
 const Container = styled.ScrollView.attrs(
   {
     contentContainerStyle: {
-      flex: 1,
       flexDirection: "column",
       alignItems: "center"
     }
   }
 )`
-  background-color: #E0E0E0;
+  background-color: ${props => props.theme.container.backgroundColor};
 `;
 
 const Title = styled.Text`
@@ -58,6 +64,7 @@ const Questions = styled.View`
 const QuestionContainer = styled.View`
   flex-direction: row;
   width: 80%;
+  margin-bottom:10px;
 `;
 
 const Question = styled.Text`

@@ -13,9 +13,9 @@ const AppNavigation = () => {
   return (
     <NavigationContainer>
       <Navigator>
-        <Screen name="Results" component={ResultsScreen} />
         <Screen name="Home" component={HomeScreen} />
         <Screen name="Quizz" component={QuizzScreen} />
+        <Screen name="Results" component={ResultsScreen} />
       </Navigator>
     </NavigationContainer>
   )
