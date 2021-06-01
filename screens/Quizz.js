@@ -13,6 +13,7 @@ const QuizzScreen = ({ navigation, route }) => {
   const totalQuestions = questions.length;
   const [currentIndex, setCurrentIndex] = useState(0);
   const [score, setScore] = useState(0);
+  const [correctAnswers, setCorrectAnswers] = useState([]);
   const currentQuestion = questions[currentIndex];
 
   useFocusEffect(
@@ -20,6 +21,7 @@ const QuizzScreen = ({ navigation, route }) => {
       if (isReset) {
         setCurrentIndex(0);
         setScore(0);
+        setCorrectAnswers([]);
       }
 
       const reset = () => {
@@ -39,10 +41,11 @@ const QuizzScreen = ({ navigation, route }) => {
     if (answer === currentQuestion.correct_answer) {
       const newScore = score + 1;
       setScore(newScore);
+      setCorrectAnswers([...correctAnswers, currentIndex]);
     }
 
     if (currentIndex === totalQuestions - 1) {
-      navigation.navigate({ name: "Results", params: { score } })
+      navigation.navigate({ name: "Results", params: { score, correctAnswers } })
     }
   }
 

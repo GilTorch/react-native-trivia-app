@@ -7,8 +7,10 @@ import { decode } from "html-entities";
 const ResultsScreen = ({ navigation: { navigate }, route }) => {
 
   const score = route.params?.score || 0;
-  window.alert(score)
+  const correctAnswers = route.params?.correctAnswers;
   const questions = data.results;
+
+  const isCorrect = index => correctAnswers.includes(index);
 
   return (
     <Container>
@@ -17,8 +19,8 @@ const ResultsScreen = ({ navigation: { navigate }, route }) => {
         {questions.map((question, idx) => (
           <QuestionContainer key={idx}>
             <IconWrapper>
-              {/* <Entypo name="plus" size={34} color="#555" /> */}
-              <Entypo name="minus" size={34} color="#555" />
+              {isCorrect(idx) && <Entypo name="plus" size={34} color="#555" />}
+              {!isCorrect(idx) && <Entypo name="minus" size={34} color="#555" />}
             </IconWrapper>
             <QuestionWrapper>
               <Question>{decode(question.question)}</Question>
