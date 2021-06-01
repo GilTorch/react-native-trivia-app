@@ -12,15 +12,21 @@ const QuizzScreen = ({ navigation, route }) => {
   const questions = data.results;
   const totalQuestions = questions.length;
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [score, setScore] = useState(0);
   const currentQuestion = questions[currentIndex];
 
   useFocusEffect(
     React.useCallback(() => {
       if (isReset) {
         setCurrentIndex(0);
+        setScore(0);
       }
 
-      return () => navigation.setParams({ isReset: false });
+      const reset = () => {
+        navigation.setParams({ isReset: false, score })
+      }
+
+      return () => reset();
     }, [isReset])
   );
 
@@ -30,8 +36,13 @@ const QuizzScreen = ({ navigation, route }) => {
       setCurrentIndex(currentIndexCopy);
     }
 
+    if (answer === currentQuestion.correct_answer) {
+      const newScore = score + 1;
+      setScore(newScore);
+    }
+
     if (currentIndex === totalQuestions - 1) {
-      navigation.navigate("Results")
+      navigation.navigate({ name: "Results", params: { score } })
     }
   }
 
@@ -46,10 +57,10 @@ const QuizzScreen = ({ navigation, route }) => {
           </Text>
           </QuizzBox>
           <Answers>
-            <AnswerButton onPress={() => handleNextQuestion(true)} isTrue>
+            <AnswerButton onPress={() => handleNextQuestion("True")} isTrue>
               <Answer>✅</Answer>
             </AnswerButton>
-            <AnswerButton onPress={() => handleNextQuestion(false)}>
+            <AnswerButton onPress={() => handleNextQuestion("False")}>
               <Answer>❌</Answer>
             </AnswerButton>
           </Answers>
@@ -80,7 +91,7 @@ const Wrapper = styled.View`
 `;
 
 const Title = styled.Text`
-  width: 80%;
+  width: ${SCREEN_WIDTH - 50}px;
   font-size: 24px;
   font-weight: bold;
   text-align:center;
@@ -97,8 +108,8 @@ const QuizzBoxSize = SCREEN_WIDTH - 40;
 
 const QuizzBox = styled.View`
   border: 1px solid black;
-  width: ${QuizzBoxSize};
-  height: ${QuizzBoxSize} ;
+  width: ${QuizzBoxSize}px;
+  height: ${QuizzBoxSize}px ;
   flex-direction: row;
   justify-content:center;
   align-items:center;

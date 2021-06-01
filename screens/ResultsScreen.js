@@ -4,13 +4,15 @@ import { Entypo } from "@expo/vector-icons"
 import data from "../utils/data.json";
 import { decode } from "html-entities";
 
-const ResultsScreen = ({ navigation: { navigate } }) => {
+const ResultsScreen = ({ navigation: { navigate }, route }) => {
 
+  const score = route.params?.score || 0;
+  window.alert(score)
   const questions = data.results;
 
   return (
     <Container>
-      <Title>You scored 3/10</Title>
+      <Title>You scored {score}/10</Title>
       <Questions>
         {questions.map((question, idx) => (
           <QuestionContainer key={idx}>
