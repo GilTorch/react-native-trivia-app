@@ -1,9 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import { Entypo } from "@expo/vector-icons"
-import { decode } from "html-entities";
 import useQuestions from "../hooks/useQuestions";
 import Loading from "../components/Loading";
+import ResultQuestion from "../components/ResultQuestion";
 
 const ResultsScreen = ({ navigation: { navigate }, route }) => {
 
@@ -20,16 +19,12 @@ const ResultsScreen = ({ navigation: { navigate }, route }) => {
       <Container>
         <Title>You scored {score}/10</Title>
         <Questions>
-          {questions && questions.length > 0 && questions.map((question, idx) => (
-            <QuestionContainer key={idx}>
-              <IconWrapper>
-                {isCorrect(idx) && <Entypo name="plus" size={34} color="#555" />}
-                {!isCorrect(idx) && <Entypo name="minus" size={34} color="#555" />}
-              </IconWrapper>
-              <QuestionWrapper>
-                <Question>{decode(question.question)}</Question>
-              </QuestionWrapper>
-            </QuestionContainer>
+          {questions && questions.length > 0 && questions.map(({ question }, idx) => (
+            <ResultQuestion
+              key={idx}
+              isCorrect={() => isCorrect(idx)}
+              question={question}
+            />
           ))}
         </Questions>
         <StartButton onPress={() => navigate({ name: "Quizz", params: { isReset: true } })}>
@@ -73,24 +68,6 @@ const Questions = styled.View`
   flex-direction: column;
 `;
 
-const QuestionContainer = styled.View`
-  flex-direction: row;
-  width: 80%;
-  margin-bottom:10px;
-`;
-
-const Question = styled.Text`
-  font-size: 24px;
-  color: #444;
-`;
-
-
-const IconWrapper = styled.View`
-  margin-right:10px
-`;
-
-const QuestionWrapper = styled.View`
-`;
 
 
 const Text = styled.Text`
