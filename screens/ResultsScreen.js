@@ -44,7 +44,9 @@ const ResultsScreen = ({ navigation: { navigate }, route }) => {
 
 export default ResultsScreen;
 
-const SafeAreaView = styled.SafeAreaView``;
+const SafeAreaView = styled.SafeAreaView`
+  background-color:${props => props.theme.container.backgroundColor};
+`;
 
 const Container = styled.ScrollView.attrs(
   {
