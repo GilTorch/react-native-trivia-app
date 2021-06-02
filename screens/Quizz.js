@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import { decode } from "html-entities";
 import { useFocusEffect } from "@react-navigation/native";
 import styled from "styled-components";
-import { SCREEN_WIDTH } from "../utils/dimensions";
 import useQuestions from "../hooks/useQuestions";
 import Loading from "../components/Loading";
+import QuestionBox from "../components/QuestionBox";
 
 const QuizzScreen = ({ navigation, route }) => {
 
@@ -54,25 +53,14 @@ const QuizzScreen = ({ navigation, route }) => {
       {loading && <Loading />}
       {!loading && questions && questions.length > 0 && (
         <Wrapper>
-          <Title>{questions[currentIndex].category}</Title>
-          <QuizzBoxContainer>
-            <QuizzBox>
-              <Text>
-                {decode(questions[currentIndex].question)}
-              </Text>
-            </QuizzBox>
-            <Answers>
-              <AnswerButton onPress={() => handleNextQuestion("True")} isTrue>
-                <Answer>✅</Answer>
-              </AnswerButton>
-              <AnswerButton onPress={() => handleNextQuestion("False")}>
-                <Answer>❌</Answer>
-              </AnswerButton>
-            </Answers>
-            <QuizzBoxText>
-              {currentIndex + 1} of {questions.length}
-            </QuizzBoxText>
-          </QuizzBoxContainer>
+          <QuestionBox
+            category={questions[currentIndex].category}
+            question={questions[currentIndex].question}
+            handleNextQuestion={answer => handleNextQuestion(answer)}
+          />
+          <QuizzLevel>
+            {currentIndex + 1} of {questions.length}
+          </QuizzLevel>
         </Wrapper>
       )}
     </Container>
@@ -97,61 +85,7 @@ const Wrapper = styled.View`
   align-items: center;
 `;
 
-const Title = styled.Text`
-  width: ${SCREEN_WIDTH - 50}px;
-  font-size: 24px;
-  font-weight: bold;
-  text-align:center;
-`;
-
-const QuizzBoxContainer = styled.View`
-  flex: 1;
-  flex-direction: column;
-  justify-content:center;
-  align-items:center;
-`;
-
-const QuizzBoxSize = SCREEN_WIDTH - 40;
-
-const QuizzBox = styled.View`
-  border: 1px solid black;
-  width: ${QuizzBoxSize}px;
-  height: ${QuizzBoxSize}px ;
-  flex-direction: row;
-  justify-content:center;
-  align-items:center;
-  margin-bottom:30px;
-`;
-
-const QuizzBoxText = styled.Text`
+const QuizzLevel = styled.Text`
   font-size: 18px;
 `;
-
-const Answers = styled.View`
-  flex-direction: row;
-  align-items:center;
-`;
-
-const AnswerButton = styled.TouchableOpacity`
-  width:100px;
-  height:50px;
-  flex-direction:row;
-  justify-content: center;
-  align-items: center;
-  margin-left: 10px;
-  margin-bottom:40px;
-`;
-
-const Answer = styled.Text`
-  color: white;
-  font-size: 30px;
-`;
-
-const Text = styled.Text`
-  width: 80%;
-  font-size: 24px;
-  text-align:center;
-`;
-
-
 

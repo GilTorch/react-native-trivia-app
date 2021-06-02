@@ -20,6 +20,7 @@ const useQuestions = (amount = 10, difficulty = "hard", type = "boolean") => {
     } catch (e) {
       setLoading(false);
       setError(e);
+      throw new Error(`Error: ${e}`);
     }
   }
 
