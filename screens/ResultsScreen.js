@@ -16,32 +16,35 @@ const ResultsScreen = ({ navigation: { navigate }, route }) => {
   if (loading) return <Loading />;
 
   return (
-    <Container>
-      <Title>You scored {score}/10</Title>
-      <Questions>
-        {questions && questions.length > 0 && questions.map((question, idx) => (
-          <QuestionContainer key={idx}>
-            <IconWrapper>
-              {isCorrect(idx) && <Entypo name="plus" size={34} color="#555" />}
-              {!isCorrect(idx) && <Entypo name="minus" size={34} color="#555" />}
-            </IconWrapper>
-            <QuestionWrapper>
-              <Question>{decode(question.question)}</Question>
-            </QuestionWrapper>
-          </QuestionContainer>
-        ))}
-      </Questions>
-      <StartButton onPress={() => navigate({ name: "Quizz", params: { isReset: true } })}>
-        <Text>
-          PLAY AGAIN?
+    <SafeAreaView>
+      <Container>
+        <Title>You scored {score}/10</Title>
+        <Questions>
+          {questions && questions.length > 0 && questions.map((question, idx) => (
+            <QuestionContainer key={idx}>
+              <IconWrapper>
+                {isCorrect(idx) && <Entypo name="plus" size={34} color="#555" />}
+                {!isCorrect(idx) && <Entypo name="minus" size={34} color="#555" />}
+              </IconWrapper>
+              <QuestionWrapper>
+                <Question>{decode(question.question)}</Question>
+              </QuestionWrapper>
+            </QuestionContainer>
+          ))}
+        </Questions>
+        <StartButton onPress={() => navigate({ name: "Quizz", params: { isReset: true } })}>
+          <Text>
+            PLAY AGAIN?
       </Text>
-      </StartButton>
-    </Container>
+        </StartButton>
+      </Container>
+    </SafeAreaView>
   )
 }
 
 export default ResultsScreen;
 
+const SafeAreaView = styled.SafeAreaView``;
 
 const Container = styled.ScrollView.attrs(
   {

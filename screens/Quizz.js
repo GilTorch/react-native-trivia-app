@@ -82,7 +82,7 @@ const QuizzScreen = ({ navigation, route }) => {
 export default QuizzScreen;
 
 
-const Container = styled.View`
+const Container = styled.SafeAreaView`
   width:100%;
   height:100%;
   background-color: #E0E0E0;
