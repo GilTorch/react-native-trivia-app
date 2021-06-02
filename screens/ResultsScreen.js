@@ -1,22 +1,25 @@
 import React from "react";
 import styled from "styled-components";
 import { Entypo } from "@expo/vector-icons"
-import data from "../utils/data.json";
 import { decode } from "html-entities";
+import useQuestions from "../hooks/useQuestions";
+import Loading from "../components/Loading";
 
 const ResultsScreen = ({ navigation: { navigate }, route }) => {
 
   const score = route.params?.score || 0;
-  const questions = route.params?.questions || [];
   const correctAnswers = route.params?.correctAnswers;
-
+  const { loading, data: questions, error } = useQuestions();
   const isCorrect = index => correctAnswers.includes(index);
+
+
+  if (loading) return <Loading />;
 
   return (
     <Container>
       <Title>You scored {score}/10</Title>
       <Questions>
-        {questions.map((question, idx) => (
+        {questions && questions.length > 0 && questions.map((question, idx) => (
           <QuestionContainer key={idx}>
             <IconWrapper>
               {isCorrect(idx) && <Entypo name="plus" size={34} color="#555" />}

@@ -1,35 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { decode } from "html-entities";
 import { useFocusEffect } from "@react-navigation/native";
 import styled from "styled-components";
 import { SCREEN_WIDTH } from "../utils/dimensions";
-import API from "../services/API";
+import useQuestions from "../hooks/useQuestions";
+import Loading from "../components/Loading";
 
 const QuizzScreen = ({ navigation, route }) => {
 
   let isReset = route.params?.isReset;
-  const [questions, setQuestions] = useState([]);
-  const totalQuestions = questions.length;
   const [currentIndex, setCurrentIndex] = useState(0);
   const [score, setScore] = useState(0);
   const [correctAnswers, setCorrectAnswers] = useState([]);
-  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    fetchQuestions();
-  }, [])
-
-  const fetchQuestions = async () => {
-    try {
-      setLoading(true);
-      const response = await API.getQuestions();
-      setQuestions(response.data.results);
-      setLoading(false);
-    } catch (e) {
-      setLoading(false);
-      throw new Error(`Error: ${e}`)
-    }
-  }
+  const { loading, data: questions, error } = useQuestions();
 
   useFocusEffect(
     React.useCallback(() => {
@@ -49,6 +33,7 @@ const QuizzScreen = ({ navigation, route }) => {
 
   const handleNextQuestion = answer => {
     let currentIndexCopy = currentIndex + 1;
+    const totalQuestions = questions.length;
     if (currentIndex < totalQuestions - 1) {
       setCurrentIndex(currentIndexCopy);
     }
@@ -66,9 +51,7 @@ const QuizzScreen = ({ navigation, route }) => {
 
   return (
     <Container>
-      {loading && <LoadingContainer>
-        <Loading />
-      </LoadingContainer>}
+      {loading && <Loading />}
       {!loading && questions && questions.length > 0 && (
         <Wrapper>
           <Title>{questions[currentIndex].category}</Title>
@@ -87,7 +70,7 @@ const QuizzScreen = ({ navigation, route }) => {
               </AnswerButton>
             </Answers>
             <QuizzBoxText>
-              {currentIndex + 1} of {totalQuestions}
+              {currentIndex + 1} of {questions.length}
             </QuizzBoxText>
           </QuizzBoxContainer>
         </Wrapper>
@@ -108,18 +91,6 @@ const Container = styled.View`
   padding-top: 20px;
 `;
 
-const LoadingContainer = styled.View`
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-`;
-
-const Loading = styled.ActivityIndicator.attrs(
-  {
-    size: "large"
-  }
-)`
-`;
 
 const Wrapper = styled.View`
   flex-direction:column;
