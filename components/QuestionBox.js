@@ -41,12 +41,11 @@ const QuizzBoxContainer = styled.View`
   align-items:center;
 `;
 
-const QuizzBoxSize = SCREEN_WIDTH - 40;
 
 const QuizzBox = styled.View`
   border: 1px solid black;
-  width: ${QuizzBoxSize}px;
-  height: ${QuizzBoxSize}px ;
+  width: ${props => props.theme.quizzBoxSize}px;
+  height: ${props => props.theme.quizzBoxSize}px ;
   flex-direction: row;
   justify-content:center;
   align-items:center;

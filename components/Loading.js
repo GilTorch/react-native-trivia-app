@@ -9,6 +9,7 @@ export default Loading;
 
 
 const LoadingContainer = styled.View`
+  background-color: ${props => props.theme.backgroundColor};
   flex: 1;
   justify-content: center;
   align-items: center;
